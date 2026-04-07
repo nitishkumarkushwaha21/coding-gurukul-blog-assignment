@@ -82,7 +82,11 @@ export async function insertIdea(record: Omit<IdeaRecord, "id" | "created_at">) 
   }
 
   if (error) {
-    throw error;
+    console.error("Supabase insert failed, using mock fallback", error);
+    const mock = createMockIdeaRecord(record.idea_text);
+    const merged = { ...mock, ...record, id: mock.id, created_at: mock.created_at };
+    mockIdeasStore.unshift(merged);
+    return merged;
   }
 
   return normalizeIdeaRecord({
@@ -96,16 +100,21 @@ export async function getIdeas() {
     return mockIdeasStore;
   }
 
-  const { data, error } = await supabase
-    .from("ideas")
-    .select("*")
-    .order("created_at", { ascending: false });
+  try {
+    const { data, error } = await supabase
+      .from("ideas")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-  if (error) {
-    throw error;
+    if (error) {
+      throw error;
+    }
+
+    return (data as Partial<IdeaRecord>[]).map(normalizeIdeaRecord);
+  } catch (error) {
+    console.error("Supabase fetch ideas failed, using mock fallback", error);
+    return mockIdeasStore;
   }
-
-  return (data as Partial<IdeaRecord>[]).map(normalizeIdeaRecord);
 }
 
 export async function getIdeaById(id: string) {
@@ -113,13 +122,18 @@ export async function getIdeaById(id: string) {
     return mockIdeasStore.find((idea) => idea.id === id) ?? null;
   }
 
-  const { data, error } = await supabase.from("ideas").select("*").eq("id", id).single();
+  try {
+    const { data, error } = await supabase.from("ideas").select("*").eq("id", id).single();
 
-  if (error) {
-    throw error;
+    if (error) {
+      throw error;
+    }
+
+    return normalizeIdeaRecord(data as Partial<IdeaRecord>);
+  } catch (error) {
+    console.error("Supabase fetch idea failed, using mock fallback", error);
+    return mockIdeasStore.find((idea) => idea.id === id) ?? null;
   }
-
-  return normalizeIdeaRecord(data as Partial<IdeaRecord>);
 }
 
 export async function deleteIdea(id: string) {
@@ -134,11 +148,23 @@ export async function deleteIdea(id: string) {
     return true;
   }
 
-  const { error } = await supabase.from("ideas").delete().eq("id", id);
+  try {
+    const { error } = await supabase.from("ideas").delete().eq("id", id);
 
-  if (error) {
-    throw error;
+    if (error) {
+      throw error;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Supabase delete failed, using mock fallback", error);
+    const index = mockIdeasStore.findIndex((idea) => idea.id === id);
+
+    if (index === -1) {
+      return false;
+    }
+
+    mockIdeasStore.splice(index, 1);
+    return true;
   }
-
-  return true;
 }
