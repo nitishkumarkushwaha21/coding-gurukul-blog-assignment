@@ -182,7 +182,7 @@ export function ReportFull({ idea }: { idea: IdeaRecord }) {
             <ReportSection icon={BriefcaseBusiness} title="Competitors" content={idea.competitors} />
           </div>
 
-          <div className="grid gap-10 border-t pt-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-x-12">
+          <div className="grid gap-10 border-t pt-10 lg:grid-cols-2 lg:gap-x-12">
             <ReportSection icon={Cpu} title="Suggested Tech Stack" content={idea.tech_stack} />
             <ReportSection
               icon={CircleDollarSign}
