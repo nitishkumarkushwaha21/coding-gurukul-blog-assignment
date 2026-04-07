@@ -9,7 +9,7 @@ An App Router Next.js project for validating startup ideas with an AI-generated 
 - Tailwind CSS
 - shadcn-inspired component structure
 - Supabase
-- Anthropic Claude API
+- OpenRouter API
 - jsPDF
 
 ## Setup
@@ -21,7 +21,8 @@ An App Router Next.js project for validating startup ideas with an AI-generated 
 ## Environment Variables
 
 ```bash
-ANTHROPIC_API_KEY=dummy_anthropic_api_key
+OPENROUTER_API_KEY=dummy_openrouter_api_key
+OPENROUTER_MODEL=anthropic/claude-sonnet-4
 NEXT_PUBLIC_SUPABASE_URL=https://dummy-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=dummy_supabase_anon_key
 ```
