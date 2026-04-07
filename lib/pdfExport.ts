@@ -22,8 +22,9 @@ export function exportReportToPDF(idea: IdeaRecord) {
     { title: "Target Customer", content: idea.customer },
     { title: "Market Opportunity", content: idea.market },
     { title: "Competitors", content: idea.competitors },
+    { title: "Suggested Tech Stack", content: idea.tech_stack },
     { title: "Risk Level", content: idea.risk_level },
-    { title: "Profitability Score", content: `${idea.profit_score}/10` },
+    { title: "Profitability Score", content: `${idea.profit_score}/100` },
     { title: "Profitability Rationale", content: idea.profit_reasoning ?? "" }
   ];
 

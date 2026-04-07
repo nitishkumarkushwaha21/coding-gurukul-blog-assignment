@@ -3,6 +3,7 @@ import {
   BriefcaseBusiness,
   CircleSlash,
   CircleDollarSign,
+  Cpu,
   Crosshair,
   LineChart,
   TrendingUp,
@@ -19,7 +20,8 @@ const sections = [
   { key: "problem", label: "Problem", icon: Crosshair },
   { key: "customer", label: "Target Customer", icon: Users },
   { key: "market", label: "Market Opportunity", icon: LineChart },
-  { key: "competitors", label: "Competitors", icon: BriefcaseBusiness }
+  { key: "competitors", label: "Competitors", icon: BriefcaseBusiness },
+  { key: "tech_stack", label: "Suggested Tech Stack", icon: Cpu }
 ] as const;
 
 function leadSentence(value: string) {

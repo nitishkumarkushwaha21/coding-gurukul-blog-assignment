@@ -5,6 +5,7 @@ export interface ValidationReport {
   customer: string;
   market: string;
   competitors: string;
+  tech_stack: string;
   risk_level: RiskLevel;
   profit_score: number;
   profit_reasoning?: string;

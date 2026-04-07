@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
@@ -12,6 +12,7 @@ import type { IdeaRecord, ValidateIdeaPayload } from "@/types";
 
 export function IdeaForm() {
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
   const [idea, setIdea] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,12 +63,21 @@ export function IdeaForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
           <Textarea
             value={idea}
             onChange={(event) => setIdea(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                formRef.current?.requestSubmit();
+              }
+            }}
             placeholder="Example: An AI-powered platform that helps local gyms convert trial users into members using personalized WhatsApp campaigns."
             className="min-h-[250px] w-full bg-background"
+            spellCheck={false}
+            autoCorrect="off"
+            autoCapitalize="off"
           />
           {error ? <p className="text-sm text-rose-300">{error}</p> : null}
           <div className="flex flex-wrap items-center justify-between gap-3">

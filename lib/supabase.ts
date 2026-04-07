@@ -20,6 +20,7 @@ function normalizeIdeaRecord(idea: Partial<IdeaRecord>): IdeaRecord {
     customer: idea.customer ?? "",
     market: idea.market ?? "",
     competitors: idea.competitors ?? "",
+    tech_stack: idea.tech_stack ?? "",
     risk_level:
       idea.risk_level === "Low" || idea.risk_level === "Medium" || idea.risk_level === "High"
         ? idea.risk_level
@@ -44,6 +45,7 @@ export async function insertIdea(record: Omit<IdeaRecord, "id" | "created_at">) 
     customer: record.customer,
     market: record.market,
     competitors: record.competitors,
+    tech_stack: record.tech_stack,
     risk_level: record.risk_level,
     profit_score: record.profit_score,
     raw_response: record.raw_response,
@@ -52,7 +54,11 @@ export async function insertIdea(record: Omit<IdeaRecord, "id" | "created_at">) 
 
   let { data, error } = await supabase.from("ideas").insert([insertPayload]).select().single();
 
-  if (error && error.message.toLowerCase().includes("profit_reasoning")) {
+  if (
+    error &&
+    (error.message.toLowerCase().includes("profit_reasoning") ||
+      error.message.toLowerCase().includes("tech_stack"))
+  ) {
     const retry = await supabase
       .from("ideas")
       .insert([
@@ -62,6 +68,7 @@ export async function insertIdea(record: Omit<IdeaRecord, "id" | "created_at">) 
           customer: record.customer,
           market: record.market,
           competitors: record.competitors,
+          tech_stack: record.tech_stack,
           risk_level: record.risk_level,
           profit_score: record.profit_score,
           raw_response: record.raw_response
@@ -113,4 +120,25 @@ export async function getIdeaById(id: string) {
   }
 
   return normalizeIdeaRecord(data as Partial<IdeaRecord>);
+}
+
+export async function deleteIdea(id: string) {
+  if (!supabase) {
+    const index = mockIdeasStore.findIndex((idea) => idea.id === id);
+
+    if (index === -1) {
+      return false;
+    }
+
+    mockIdeasStore.splice(index, 1);
+    return true;
+  }
+
+  const { error } = await supabase.from("ideas").delete().eq("id", id);
+
+  if (error) {
+    throw error;
+  }
+
+  return true;
 }

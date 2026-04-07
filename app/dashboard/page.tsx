@@ -1,6 +1,5 @@
+import { DashboardIdeas } from "@/components/DashboardIdeas";
 import { Navbar } from "@/components/Navbar";
-import { ReportCard } from "@/components/ReportCard";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getIdeas } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
@@ -21,24 +20,7 @@ export default async function DashboardPage() {
           </p>
         </div>
 
-        {ideas.length === 0 ? (
-          <Card className="border-dashed">
-            <CardHeader>
-              <CardTitle>No ideas yet</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Your validated startup ideas will appear here once you submit the first one.
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {ideas.map((idea) => (
-              <ReportCard key={idea.id} idea={idea} />
-            ))}
-          </div>
-        )}
+        <DashboardIdeas initialIdeas={ideas} />
       </main>
     </div>
   );

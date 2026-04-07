@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils";
 
 export function ScoreBadge({ score }: { score: number }) {
   const tone =
-    score >= 8
+    score >= 75
       ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-      : score >= 5
+      : score >= 45
         ? "border-amber-200 bg-amber-50 text-amber-800"
         : "border-rose-200 bg-rose-50 text-rose-800";
 
@@ -14,10 +14,10 @@ export function ScoreBadge({ score }: { score: number }) {
       <span
         className={cn(
           "inline-block h-2.5 w-2.5 rounded-full",
-          score >= 8 ? "bg-emerald-500" : score >= 5 ? "bg-amber-500" : "bg-rose-500"
+          score >= 75 ? "bg-emerald-500" : score >= 45 ? "bg-amber-500" : "bg-rose-500"
         )}
       />
-      {score}/10 Score
+      {score}/100 Score
     </Badge>
   );
 }

@@ -10,8 +10,10 @@ function buildReport(_ideaText: string): ValidationReport {
       "AI-assisted research and validation tools continue to grow as more solo founders and lean teams ship products online. This idea fits a broad pre-launch workflow where fast decision support is valuable and repeatable.",
     competitors:
       "Potential competitors include generic AI chat workflows, startup coaching products, and business-plan generators. Differentiation comes from structured outputs, saved report history, and a purpose-built founder experience.",
+    tech_stack:
+      "Next.js for the web app, Supabase for database and auth, OpenRouter-backed LLM inference for idea analysis, and Vercel for deployment would be a lean MVP stack.",
     risk_level: "Medium",
-    profit_score: 7,
+    profit_score: 72,
     profit_reasoning:
       "There is clear demand for faster validation workflows, but retention depends on evolving beyond one-off scoring into a repeatable founder toolkit.",
   };
