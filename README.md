@@ -1,85 +1,127 @@
-# AI Startup Validator
+# coding-gurukul-blog-assignment
 
-Next.js full-stack app to validate startup ideas using OpenRouter and store reports in Supabase.
+A production-style blog CMS assignment built with Next.js 14 App Router, TypeScript, Tailwind CSS, and MDX.
 
-## Run Locally
+## Project Overview
 
-1. Install dependencies
+This project is a blog management system built with Next.js App Router, TypeScript, Tailwind CSS, and MDX.
+It supports:
 
+- Editorial-style homepage with search, tag filters, and pagination
+- SEO-friendly blog detail pages with SSG and metadata
+- Admin dashboard for create, edit, publish toggle, and delete
+- Rich MDX editing with autosave and preview
+- Dark mode and responsive layouts
+
+## Tech Stack
+
+- Next.js 14 (App Router): server components, metadata, route handlers, SSG
+- TypeScript: static type safety
+- Tailwind CSS: fast and consistent UI styling
+- next-mdx-remote/rsc: server-side MDX rendering for SEO and performance
+- @uiw/react-md-editor: rich markdown editing experience
+- reading-time: reading-time calculation for cards/detail pages
+- rehype-highlight + rehype-slug + rehype-autolink-headings: syntax highlighting and heading anchors
+- next-themes: dark mode support
+- sonner: toast notifications in admin flows
+- Local JSON store: lightweight data layer for demo/dev
+
+## Setup
+
+1. Install dependencies:
+
+```bash
 npm install
+```
 
-2. Add environment variables in .env.local
+2. Run development server:
 
-OPENROUTER_API_KEY=your_openrouter_key
-OPENROUTER_MODEL=anthropic/claude-sonnet-4.6
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-3. Start app
-
+```bash
 npm run dev
+```
 
-## API Endpoints
+3. Open:
 
-- POST /api/validate
-- GET /api/ideas
-- GET /api/ideas/:id
-- DELETE /api/ideas/:id
+```text
+http://localhost:3000
+```
 
-## Prompt Used for AI Validation (Updated)
+## Repository
 
-Source: lib/claude.ts
+- GitHub: https://github.com/nitishkumarkushwaha21/coding-gurukul-blog-assignment
 
-The app sends this exact prompt template to OpenRouter:
+## Folder Structure
 
-You are a startup analyst. Analyze the following startup idea and return a JSON object only.
-Return valid raw JSON only. Do not wrap it in markdown. Do not include any explanation text.
-Use exactly these 8 keys and no others: problem, customer, market, competitors, tech_stack, risk_level, profit_score, profit_reasoning.
-Be opinionated and decisive. Do not default to Medium risk or average scores unless the idea is genuinely mixed.
+```text
+src/
+  app/
+    page.tsx
+    loading.tsx
+    not-found.tsx
+    sitemap.ts
+    robots.ts
+    blog/[slug]/page.tsx
+    admin/page.tsx
+    admin/new/page.tsx
+    admin/edit/[slug]/page.tsx
+    api/blogs/...
+  components/
+    BlogCard.tsx
+    BlogListingClient.tsx
+    BlogDetail.tsx
+    AdminBlogTable.tsx
+    AdminEditor.tsx
+    TableOfContents.tsx
+    ThemeProvider.tsx
+    ThemeToggle.tsx
+    ui/...
+  lib/
+    blogs.ts
+    mdx.tsx
+    seo.ts
+  data/
+    blogs.json
+  types/
+    blog.ts
+```
 
-Scoring rubric:
+## Key Decisions
 
-- profit_score must be an integer from 0 to 100
-- use 0-30 for weak ideas with low demand, poor differentiation, or difficult economics
-- use 31-49 for below-average ideas with clear concerns
-- use 50-69 for mixed ideas with meaningful upside and meaningful risk
-- use 70-84 for strong ideas with good demand and execution potential
-- use 85-100 only for unusually strong and clearly differentiated opportunities
+- File-based JSON store was chosen for simplicity and project scope. No external DB is required for demo/dev.
+- next-mdx-remote/rsc is used for server-side MDX rendering so content is SEO-friendly and fast.
+- Blog detail pages use generateStaticParams for SSG to improve performance and cacheability.
+- @uiw/react-md-editor provides practical rich editing without introducing a full backend CMS.
 
-Risk rubric:
+## SEO and Performance Notes
 
-- Low: clear demand, realistic execution, and manageable competition
-- Medium: some upside but notable execution, market, or competition risk
-- High: weak differentiation, unclear market demand, regulatory friction, or hard distribution
+- Dynamic sitemap and robots are generated from published content.
+- Blog metadata includes Open Graph and Twitter cards.
+- Article JSON-LD structured data is injected on detail pages.
+- Above-the-fold images use priority where appropriate.
+- Admin MD editor is dynamically imported to reduce initial bundle cost.
 
-Important:
+## Vercel Deployment Notes
 
-- Avoid clustering around 50-70 unless justified
-- Choose Low or High risk when the case is clearly strong or clearly weak
-- Make profit_reasoning explicitly justify the score and risk choice
-- If the idea has proven demand, easy distribution, low regulatory friction, and a realistic MVP, give it a high score and Low risk
-- If the idea is capital-heavy, regulatory-heavy, behavior-change-heavy, or weakly differentiated, score it aggressively lower and use High risk
-- Do not avoid scores above 80 when the idea is genuinely strong
-- Do not avoid scores below 35 when the idea is genuinely weak
+- A minimal vercel.json already exists and works for Next.js.
+- This demo uses file writes to src/data/blogs.json.
+- On Vercel production, the filesystem is read-only at runtime, so JSON writes are not persistent.
+- For production, replace the JSON store with a database layer (for example PlanetScale, Supabase, or Upstash Redis).
 
-Startup Idea: "{ideaText}"
+## Known Limitations
 
-Return this exact JSON structure:
-{
-"problem": "What core problem does this solve? (2-3 sentences)",
-"customer": "Who is the target customer? Be specific about demographics and psychographics. (2-3 sentences)",
-"market": "What is the estimated market size and growth opportunity? (2-3 sentences)",
-"competitors": "List 3-4 main competitors and what makes this idea different.",
-"tech_stack": "Suggested MVP tech stack. Keep it practical and concise.",
-"risk_level": "Low | Medium | High",
-"profit_score": 72,
-"profit_reasoning": "Why did you give this profitability score and risk level? (1-2 sentences)"
-}
+- JSON storage is best for local/dev demos only.
+- No authentication or authorization is enforced for admin routes.
+- Search is basic and does not include fuzzy ranking.
+- No image upload pipeline yet (URL-based images only).
 
-## OpenRouter Configuration
+## If More Time Was Available
 
-- Endpoint: https://openrouter.ai/api/v1/chat/completions
-- Model: OPENROUTER_MODEL (env based, easy to switch to paid/high-quality models)
-- Temperature: 0.2
-- Max tokens: 1024
-- Response format: json_object
+- Add authentication and role-based admin access.
+- Replace JSON store with a production DB and migrations.
+- Add full-text search and category archives.
+- Add integration tests for API + editor workflows.
+- Add analytics and content performance dashboards.
+
+## Live Demo
+
+- Add your deployed URL here after deployment.

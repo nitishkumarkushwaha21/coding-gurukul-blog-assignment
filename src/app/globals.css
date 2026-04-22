@@ -1,0 +1,61 @@
+@import "highlight.js/styles/github-dark.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 40% 98%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --muted: 210 30% 94%;
+  --muted-foreground: 215 16% 40%;
+  --border: 214 24% 89%;
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+}
+
+.dark {
+  --background: 224 35% 10%;
+  --foreground: 210 40% 96%;
+  --card: 224 30% 13%;
+  --card-foreground: 210 40% 96%;
+  --muted: 225 24% 19%;
+  --muted-foreground: 215 18% 72%;
+  --border: 226 18% 24%;
+  --primary: 213 93% 68%;
+  --primary-foreground: 224 35% 10%;
+}
+
+* {
+  @apply border-border;
+}
+
+body {
+  @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] antialiased;
+  font-feature-settings: "liga" 1, "kern" 1;
+}
+
+a {
+  @apply text-blue-700 hover:text-blue-800;
+}
+
+.dark a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+.prose pre {
+  @apply overflow-x-auto rounded-xl border bg-slate-900 p-4 text-slate-100;
+}
+
+.prose img {
+  @apply rounded-xl border;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-display;
+}
