@@ -43,10 +43,13 @@ export function BlogListingClient({
   const gridBlogs = hero
     ? pageBlogs.filter((blog) => blog.id !== hero.id)
     : pageBlogs;
+  const hasFilters = Boolean(query || tagFilter);
+  const isFirstPage = safePage <= 1;
+  const isLastPage = safePage >= pageCount;
 
   return (
     <section className="space-y-10" aria-label="Homepage blog listing">
-      <header className="space-y-5 rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900">
+      <header className="space-y-6 rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-amber-50/60 p-8 shadow-sm dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
           Editorial Magazine
         </p>
@@ -61,10 +64,33 @@ export function BlogListingClient({
           q={searchParams?.q ?? ""}
           tag={searchParams?.tag ?? ""}
         />
+        {hasFilters ? (
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            <span className="font-semibold uppercase tracking-[0.14em] text-slate-500">
+              Active filters
+            </span>
+            {query ? (
+              <span className="rounded-full border border-slate-300 bg-white px-3 py-1 font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+                Search: {query}
+              </span>
+            ) : null}
+            {tagFilter ? (
+              <span className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 font-medium text-amber-900 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300">
+                Tag: #{tagFilter}
+              </span>
+            ) : null}
+            <Link
+              href="/"
+              className="rounded-full border border-transparent px-3 py-1 font-medium text-slate-600 underline decoration-slate-400 underline-offset-4 transition hover:border-slate-200 hover:bg-white hover:text-slate-900 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-900 dark:hover:text-slate-100"
+            >
+              Clear all
+            </Link>
+          </div>
+        ) : null}
       </header>
 
       {hero ? (
-        <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
           <Link href={`/blog/${hero.slug}`} className="block">
             <div className="relative aspect-[16/7] w-full">
               <Image
@@ -75,6 +101,7 @@ export function BlogListingClient({
                 sizes="100vw"
                 className="object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-slate-900/10 to-transparent" />
             </div>
           </Link>
           <div className="space-y-4 p-8">
@@ -107,21 +134,23 @@ export function BlogListingClient({
         ))}
       </div>
 
-      <nav
-        aria-label="Pagination"
-        className="flex items-center justify-center gap-3 pb-2"
-      >
+      <nav aria-label="Pagination" className="flex items-center justify-center gap-3 pb-2">
         <Link
           href={`/?${new URLSearchParams({
             ...(query ? { q: query } : {}),
             ...(tagFilter ? { tag: tagFilter } : {}),
             page: String(Math.max(1, safePage - 1)),
           }).toString()}`}
-          className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+          aria-disabled={isFirstPage}
+          className={`rounded-lg border px-4 py-2 text-sm transition ${
+            isFirstPage
+              ? "pointer-events-none border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-600"
+              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:bg-slate-800"
+          }`}
         >
           Previous
         </Link>
-        <span className="text-sm text-slate-600 dark:text-slate-300">
+        <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
           Page {safePage} of {pageCount}
         </span>
         <Link
@@ -130,7 +159,12 @@ export function BlogListingClient({
             ...(tagFilter ? { tag: tagFilter } : {}),
             page: String(Math.min(pageCount, safePage + 1)),
           }).toString()}`}
-          className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+          aria-disabled={isLastPage}
+          className={`rounded-lg border px-4 py-2 text-sm transition ${
+            isLastPage
+              ? "pointer-events-none border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-600"
+              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:bg-slate-800"
+          }`}
         >
           Next
         </Link>

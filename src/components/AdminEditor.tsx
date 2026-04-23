@@ -160,6 +160,20 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
     title,
   ]);
 
+  useEffect(() => {
+    function handleBeforeUnload(event: BeforeUnloadEvent) {
+      if (!unsaved || saving) {
+        return;
+      }
+
+      event.preventDefault();
+      event.returnValue = "";
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [saving, unsaved]);
+
   function addTag() {
     const normalized = tagInput.trim();
     if (!normalized || tags.includes(normalized)) {
@@ -320,17 +334,28 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
 
   return (
     <section
-      className="space-y-4 rounded-2xl border bg-white p-5"
+      className="space-y-4 rounded-2xl border bg-white p-5 shadow-sm"
       data-color-mode="light"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <Tabs value={tab} defaultValue="edit" onValueChange={setTab}>
           <TabsList>
             <TabsTrigger value="edit">Edit</TabsTrigger>
             <TabsTrigger value="preview">Preview</TabsTrigger>
           </TabsList>
         </Tabs>
-        <p className="text-xs text-slate-500">
+        <p
+          className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium ${
+            unsaved
+              ? "bg-amber-50 text-amber-800"
+              : "bg-emerald-50 text-emerald-700"
+          }`}
+        >
+          <span
+            className={`inline-block h-1.5 w-1.5 rounded-full ${
+              unsaved ? "bg-amber-600" : "bg-emerald-600"
+            }`}
+          />
           {unsaved ? "Unsaved changes" : "All changes saved"}
         </p>
       </div>
@@ -563,7 +588,10 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
         </TabsContent>
       </Tabs>
 
-      <div className="flex items-center gap-3">
+      <div className="sticky bottom-3 z-20 flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white/95 p-3 backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
+        <p className="text-xs text-slate-500 dark:text-slate-300">
+          {status === "published" ? "Ready to publish updates" : "This post is in draft mode"}
+        </p>
         <Button type="button" onClick={handleSubmit} disabled={saving}>
           {saving
             ? "Saving..."

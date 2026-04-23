@@ -48,7 +48,7 @@
     "slug": "designing-for-readability-in-tech-blogs",
     "title": "Designing for Readability in Tech Blogs",
     "excerpt": "Typography, spacing, and information hierarchy decisions that increase completion rate.",
-    "content": "# Readability first\nReaders scan before they commit.\n\n## Three layout wins\n- Keep paragraph widths comfortable\n- Use meaningful subheadings\n- Add visual anchors every 2-3 sections\n\n```css\n.prose h2 {\n  scroll-margin-top: 7rem;\n}\n```\n\n![Readable layout](https://picsum.photos/700/320?random=33)\n\n## Conclusion\nGreat writing deserves great presentation.",
+    "content": "# Readability first\nReaders scan before they commit.\n\n## Three layout wins\n- Keep paragraph widths comfortable\n- Use meaningful subheadings\n- Add visual anchors every 2-3 sections\n\n![Readable layout](https://picsum.photos/700/320?random=33)\n\n## Conclusion\nGreat writing deserves great presentation.",
     "coverImage": "https://picsum.photos/800/400?random=3",
     "author": {
       "name": "Noah Patel",

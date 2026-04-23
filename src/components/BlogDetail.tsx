@@ -10,19 +10,19 @@ import { TableOfContents } from "./TableOfContents";
 
 export function BlogDetail({ blog }: { blog: Blog }) {
   return (
-    <article className="space-y-8" aria-label="Blog post article">
+    <article className="space-y-10" aria-label="Blog post article">
       <Link
         href="/"
-        className="inline-flex items-center text-sm font-medium text-slate-600 hover:text-slate-900"
+        className="inline-flex items-center gap-1 text-sm font-medium text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100"
       >
         <span aria-hidden="true">←</span> All Posts
       </Link>
 
-      <header className="space-y-5" aria-label="Blog header">
-        <h1 className="font-display text-5xl leading-tight tracking-tight text-slate-900 dark:text-slate-100 md:text-6xl">
+      <header className="space-y-5 border-b border-slate-200 pb-8 dark:border-slate-800" aria-label="Blog header">
+        <h1 className="max-w-4xl font-display text-5xl leading-tight tracking-tight text-slate-900 dark:text-slate-100 md:text-6xl">
           {blog.title}
         </h1>
-        <p className="max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+        <p className="max-w-3xl text-xl leading-8 text-slate-600 dark:text-slate-300">
           {blog.excerpt}
         </p>
         <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
@@ -62,10 +62,10 @@ export function BlogDetail({ blog }: { blog: Blog }) {
         className="max-h-[500px] w-full rounded-2xl border border-slate-200 object-cover"
       />
 
-      <div className="grid gap-8 lg:grid-cols-[70%_30%]">
+      <div className="grid gap-8 lg:grid-cols-[68%_32%]">
         <section
           aria-label="Post content"
-          className="rounded-2xl border border-slate-200 bg-white p-6 md:p-10 dark:border-slate-800 dark:bg-slate-900"
+          className="article-prose rounded-2xl border border-slate-200 bg-white p-6 md:p-10 dark:border-slate-800 dark:bg-slate-900"
         >
           {renderMDX(blog.content)}
         </section>

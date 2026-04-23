@@ -39,6 +39,10 @@ body {
   font-feature-settings: "liga" 1, "kern" 1;
 }
 
+::selection {
+  @apply bg-amber-200/60 text-slate-900;
+}
+
 a {
   @apply text-blue-700 hover:text-blue-800;
 }
@@ -60,4 +64,37 @@ h2,
 h3,
 h4 {
   @apply font-display;
+}
+
+.article-prose {
+  @apply text-[17px] leading-8 text-slate-700 dark:text-slate-200;
+}
+
+.article-prose > * + * {
+  @apply mt-6;
+}
+
+.article-prose h2 {
+  @apply mt-12 border-b border-slate-200 pb-3 text-3xl text-slate-900 dark:border-slate-700 dark:text-slate-100;
+}
+
+.article-prose h3 {
+  @apply mt-8 text-2xl text-slate-900 dark:text-slate-100;
+}
+
+.article-prose p {
+  @apply leading-8 text-slate-700 dark:text-slate-200;
+}
+
+.article-prose ul,
+.article-prose ol {
+  @apply pl-6;
+}
+
+.article-prose li {
+  @apply my-2;
+}
+
+.article-prose blockquote {
+  @apply border-l-4 border-amber-300 bg-amber-50/50 py-1 pl-4 italic text-slate-700 dark:border-amber-700 dark:bg-amber-950/20 dark:text-slate-200;
 }

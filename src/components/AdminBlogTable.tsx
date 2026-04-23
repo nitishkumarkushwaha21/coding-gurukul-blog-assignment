@@ -44,7 +44,7 @@ export function AdminBlogTable({ blogs }: { blogs: Blog[] }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border bg-white">
+    <div className="overflow-hidden rounded-2xl border bg-white shadow-sm">
       <Table>
         <TableHeader>
           <TableRow>
@@ -57,7 +57,7 @@ export function AdminBlogTable({ blogs }: { blogs: Blog[] }) {
         </TableHeader>
         <TableBody>
           {blogs.map((blog) => (
-            <TableRow key={blog.id}>
+            <TableRow key={blog.id} className="hover:bg-slate-50/80">
               <TableCell className="font-medium text-slate-900">
                 {blog.title}
               </TableCell>
