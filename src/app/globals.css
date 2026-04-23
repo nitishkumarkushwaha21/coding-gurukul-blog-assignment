@@ -5,6 +5,8 @@
 @tailwind utilities;
 
 :root {
+  --font-playfair: "Georgia", "Times New Roman", "Times", serif;
+  --font-source-serif: "Palatino Linotype", "Book Antiqua", "Palatino", serif;
   --background: 210 40% 98%;
   --foreground: 222 47% 11%;
   --card: 0 0% 100%;

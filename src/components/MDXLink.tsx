@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import type React from "react";
 
@@ -25,12 +24,12 @@ export function MDXLink({ href = "", children, ...props }: MDXLinkProps) {
   }
 
   return (
-    <Link
+    <a
       href={href}
       className="underline decoration-slate-400 underline-offset-2 hover:text-slate-900"
       {...props}
     >
       {children}
-    </Link>
+    </a>
   );
 }

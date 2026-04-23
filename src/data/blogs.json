@@ -6,8 +6,15 @@
     "excerpt": "How to structure a modern editorial workflow with MDX, static generation, and an admin panel.",
     "content": "# Why a Content Engine Matters\nA consistent publishing rhythm compounds over time.\n\n## The architecture\n- Next.js App Router\n- MDX content body\n- JSON-backed admin workflows\n\n### Rendering strategy\nUse server components for fast page loads and cache where possible.\n\n```ts\nexport function estimateCadence(postsPerWeek: number) {\n  return postsPerWeek * 52;\n}\n```\n\n![Editorial Board](https://picsum.photos/700/320?random=31)\n\n## Final thought\nBuild the system once, then spend energy on ideas, not tooling.",
     "coverImage": "https://picsum.photos/800/400?random=1",
-    "author": { "name": "Maya Reed", "avatar": "https://i.pravatar.cc/100?img=11" },
-    "tags": ["nextjs", "content", "mdx"],
+    "author": {
+      "name": "Maya Reed",
+      "avatar": "https://i.pravatar.cc/100?img=11"
+    },
+    "tags": [
+      "nextjs",
+      "content",
+      "mdx"
+    ],
     "featured": true,
     "status": "published",
     "createdAt": "2026-02-08T10:00:00.000Z",
@@ -21,8 +28,15 @@
     "excerpt": "Practical checkpoints to keep your writing quality high while shipping weekly.",
     "content": "# Drafting with clarity\nYour first draft should optimize for speed.\n\n## Editing checklist\n1. Improve headline promise\n2. Tighten intro and transitions\n3. Add one actionable framework\n\n```md\n### Rule of thumb\nIf a paragraph does not move the argument forward, trim it.\n```\n\n## Visual support\n![Workflow diagram](https://picsum.photos/700/320?random=32)\n\n### Wrap-up\nA simple process beats an ambitious but inconsistent one.",
     "coverImage": "https://picsum.photos/800/400?random=2",
-    "author": { "name": "Ari Khan", "avatar": "https://i.pravatar.cc/100?img=22" },
-    "tags": ["writing", "workflow", "editorial"],
+    "author": {
+      "name": "Ari Khan",
+      "avatar": "https://i.pravatar.cc/100?img=22"
+    },
+    "tags": [
+      "writing",
+      "workflow",
+      "editorial"
+    ],
     "featured": false,
     "status": "published",
     "createdAt": "2026-02-16T11:00:00.000Z",
@@ -36,8 +50,15 @@
     "excerpt": "Typography, spacing, and information hierarchy decisions that increase completion rate.",
     "content": "# Readability first\nReaders scan before they commit.\n\n## Three layout wins\n- Keep paragraph widths comfortable\n- Use meaningful subheadings\n- Add visual anchors every 2-3 sections\n\n```css\n.prose h2 {\n  scroll-margin-top: 7rem;\n}\n```\n\n![Readable layout](https://picsum.photos/700/320?random=33)\n\n## Conclusion\nGreat writing deserves great presentation.",
     "coverImage": "https://picsum.photos/800/400?random=3",
-    "author": { "name": "Noah Patel", "avatar": "https://i.pravatar.cc/100?img=31" },
-    "tags": ["design", "ux", "typography"],
+    "author": {
+      "name": "Noah Patel",
+      "avatar": "https://i.pravatar.cc/100?img=31"
+    },
+    "tags": [
+      "design",
+      "ux",
+      "typography"
+    ],
     "featured": true,
     "status": "published",
     "createdAt": "2026-03-01T09:30:00.000Z",
@@ -51,8 +72,15 @@
     "excerpt": "A tiny metrics stack that helps you choose what to publish next.",
     "content": "# Measure what matters\nVanity metrics can distract decision-making.\n\n## Core KPIs\n- Time on page\n- Scroll depth\n- Returning visitors\n\n```ts\nconst coreKpis = [\"time_on_page\", \"scroll_depth\", \"return_rate\"];\n```\n\n![Analytics board](https://picsum.photos/700/320?random=34)\n\n### Action loop\nReview weekly, decide monthly, optimize quarterly.",
     "coverImage": "https://picsum.photos/800/400?random=4",
-    "author": { "name": "Sara Lin", "avatar": "https://i.pravatar.cc/100?img=44" },
-    "tags": ["analytics", "growth", "strategy"],
+    "author": {
+      "name": "Sara Lin",
+      "avatar": "https://i.pravatar.cc/100?img=44"
+    },
+    "tags": [
+      "analytics",
+      "growth",
+      "strategy"
+    ],
     "featured": false,
     "status": "draft",
     "createdAt": "2026-03-11T15:00:00.000Z",
@@ -66,8 +94,15 @@
     "excerpt": "Using custom components inside Markdown to create richer educational posts.",
     "content": "# Beyond plain markdown\nMDX enables interactive and visual storytelling blocks.\n\n## Good use cases\n- Callout notes\n- Embedded charts\n- Reusable checklists\n\n```tsx\nexport function Callout({ children }: { children: React.ReactNode }) {\n  return <aside className=\"rounded-lg border p-4\">{children}</aside>;\n}\n```\n\n![Story components](https://picsum.photos/700/320?random=35)\n\n### Key takeaway\nDesign reusable content primitives once, then use them everywhere.",
     "coverImage": "https://picsum.photos/800/400?random=5",
-    "author": { "name": "Ivy Chen", "avatar": "https://i.pravatar.cc/100?img=51" },
-    "tags": ["mdx", "components", "frontend"],
+    "author": {
+      "name": "Ivy Chen",
+      "avatar": "https://i.pravatar.cc/100?img=51"
+    },
+    "tags": [
+      "mdx",
+      "components",
+      "frontend"
+    ],
     "featured": false,
     "status": "published",
     "createdAt": "2026-03-18T08:45:00.000Z",
@@ -81,12 +116,19 @@
     "excerpt": "Turn one deep article into a week of multi-format social and newsletter content.",
     "content": "# Repurpose with intent\nOne canonical post can fuel your full distribution week.\n\n## Repurposing map\n- Long-form article -> newsletter\n- 3 takeaways -> social thread\n- One framework -> carousel\n\n```bash\n# weekly content rhythm\nwrite -> edit -> publish -> repurpose\n```\n\n![Repurposing flow](https://picsum.photos/700/320?random=36)\n\n## Finish strong\nConsistency compounds trust.",
     "coverImage": "https://picsum.photos/800/400?random=6",
-    "author": { "name": "Ethan Brooks", "avatar": "https://i.pravatar.cc/100?img=60" },
-    "tags": ["founder", "distribution", "marketing"],
+    "author": {
+      "name": "Ethan Brooks",
+      "avatar": "https://i.pravatar.cc/100?img=60"
+    },
+    "tags": [
+      "founder",
+      "distribution",
+      "marketing"
+    ],
     "featured": true,
-    "status": "published",
+    "status": "draft",
     "createdAt": "2026-04-01T13:15:00.000Z",
-    "updatedAt": "2026-04-02T13:15:00.000Z",
-    "readingTime": "4 min read"
+    "updatedAt": "2026-04-23T04:28:44.040Z",
+    "readingTime": "1 min read"
   }
 ]
