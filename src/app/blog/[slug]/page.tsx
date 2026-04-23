@@ -1,3 +1,4 @@
+// Renders blog detail content and SEO metadata for each published slug.
 import { notFound } from "next/navigation";
 
 import { BlogDetail } from "@/components/BlogDetail";
@@ -5,7 +6,8 @@ import { buildMetadata, buildPageMetadata } from "@/lib/seo";
 import { getBlogBySlug, getPublishedBlogs } from "@/lib/blogs";
 
 export async function generateStaticParams() {
-  return getPublishedBlogs().map((blog) => ({ slug: blog.slug }));
+  const blogs = await getPublishedBlogs();
+  return blogs.map((blog) => ({ slug: blog.slug }));
 }
 
 export async function generateMetadata({
@@ -14,7 +16,7 @@ export async function generateMetadata({
   params: { slug: string };
 }) {
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
-  const blog = getBlogBySlug(params.slug);
+  const blog = await getBlogBySlug(params.slug);
 
   if (!blog) {
     return buildPageMetadata({
@@ -27,8 +29,12 @@ export async function generateMetadata({
   return buildMetadata(blog, `${site}/blog/${blog.slug}`);
 }
 
-export default function BlogSlugPage({ params }: { params: { slug: string } }) {
-  const blog = getBlogBySlug(params.slug);
+export default async function BlogSlugPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const blog = await getBlogBySlug(params.slug);
 
   if (!blog || blog.status !== "published") {
     notFound();

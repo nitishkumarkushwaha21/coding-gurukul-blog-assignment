@@ -1,11 +1,12 @@
+// Shows admin dashboard table for managing all blogs.
 import Link from "next/link";
 
 import { AdminBlogTable } from "@/components/AdminBlogTable";
 import { Button } from "@/components/ui/button";
 import { getAllBlogs } from "@/lib/blogs";
 
-export default function AdminPage() {
-  const blogs = getAllBlogs();
+export default async function AdminPage() {
+  const blogs = await getAllBlogs();
 
   return (
     <section className="space-y-6" aria-label="Admin dashboard">

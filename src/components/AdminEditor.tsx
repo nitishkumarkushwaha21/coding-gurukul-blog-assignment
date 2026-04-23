@@ -1,6 +1,9 @@
 "use client";
 
+// Provides admin blog editing with MDX, preview, tags, and image uploads.
+
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -70,6 +73,8 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [imageAlt, setImageAlt] = useState("");
+  const [uploadingContentImage, setUploadingContentImage] = useState(false);
+  const [uploadingCoverImage, setUploadingCoverImage] = useState(false);
   const editorWrapRef = useRef<HTMLDivElement | null>(null);
 
   const storageKey = useMemo(
@@ -194,6 +199,67 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
     setImageUrl("");
     setImageAlt("");
     setUnsaved(true);
+  }
+
+  async function uploadImage(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/uploads/image", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const data = (await res.json().catch(() => null)) as { error?: string } | null;
+      throw new Error(data?.error || "Image upload failed.");
+    }
+
+    const data = (await res.json()) as { url: string };
+    return data.url;
+  }
+
+  async function handleContentImageUpload(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!file) {
+      return;
+    }
+
+    setUploadingContentImage(true);
+
+    try {
+      const uploadedUrl = await uploadImage(file);
+      setImageUrl(uploadedUrl);
+      toast.success("Image uploaded. You can now insert it.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Image upload failed.");
+    } finally {
+      setUploadingContentImage(false);
+    }
+  }
+
+  async function handleCoverImageUpload(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!file) {
+      return;
+    }
+
+    setUploadingCoverImage(true);
+
+    try {
+      const uploadedUrl = await uploadImage(file);
+      setCoverImage(uploadedUrl);
+      setUnsaved(true);
+      toast.success("Cover image uploaded.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Image upload failed.");
+    } finally {
+      setUploadingCoverImage(false);
+    }
   }
 
   async function handleSubmit() {
@@ -321,6 +387,18 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
               setUnsaved(true);
             }}
           />
+          <div className="pt-1">
+            <Label className="text-xs text-slate-500">or upload cover image</Label>
+            <Input
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/gif"
+              onChange={handleCoverImageUpload}
+              disabled={uploadingCoverImage}
+            />
+            <p className="mt-1 text-xs text-slate-500">
+              {uploadingCoverImage ? "Uploading..." : "Supported: JPG, PNG, WEBP, GIF (max 5MB)"}
+            </p>
+          </div>
           <Image
             src={coverImage}
             alt="Cover preview"
@@ -430,6 +508,22 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
                     value={imageUrl}
                     onChange={(event) => setImageUrl(event.target.value)}
                   />
+                  <div>
+                    <Label className="mb-1 block text-xs text-slate-500">
+                      or upload image
+                    </Label>
+                    <Input
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp,image/gif"
+                      onChange={handleContentImageUpload}
+                      disabled={uploadingContentImage}
+                    />
+                    <p className="mt-1 text-xs text-slate-500">
+                      {uploadingContentImage
+                        ? "Uploading..."
+                        : "Uploads to /public/uploads and auto-fills URL"}
+                    </p>
+                  </div>
                   <Input
                     placeholder="Alt text"
                     value={imageAlt}

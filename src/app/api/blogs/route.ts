@@ -1,9 +1,11 @@
+// Exposes list and create APIs for blog resources.
 import { NextResponse } from "next/server";
 
 import { createBlog, getAllBlogs } from "@/lib/blogs";
 
 export async function GET() {
-  return NextResponse.json({ blogs: getAllBlogs() });
+  const blogs = await getAllBlogs();
+  return NextResponse.json({ blogs });
 }
 
 export async function POST(request: Request) {
@@ -21,7 +23,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid payload." }, { status: 400 });
   }
 
-  const blog = createBlog({
+  const blog = await createBlog({
     title: body.title,
     slug: typeof body.slug === "string" ? body.slug : undefined,
     excerpt: body.excerpt,

@@ -1,10 +1,11 @@
+// Renders the public homepage with published posts, filtering, and metadata.
 import type { Metadata } from "next";
 
 import { BlogListingClient } from "@/components/BlogListingClient";
 import { getPublishedBlogs } from "@/lib/blogs";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const blogs = getPublishedBlogs();
+  const blogs = await getPublishedBlogs();
   const cover =
     blogs.find((blog) => blog.featured)?.coverImage ?? blogs[0]?.coverImage;
 
@@ -26,7 +27,7 @@ export default async function HomePage({
 }: {
   searchParams?: { q?: string; tag?: string; page?: string };
 }) {
-  const blogs = getPublishedBlogs();
+  const blogs = await getPublishedBlogs();
 
   return <BlogListingClient blogs={blogs} searchParams={searchParams} />;
 }

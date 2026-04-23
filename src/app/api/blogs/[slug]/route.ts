@@ -1,3 +1,4 @@
+// Exposes read, update, and delete APIs for a single blog by slug.
 import { NextResponse } from "next/server";
 
 import { deleteBlog, getBlogBySlug, updateBlog } from "@/lib/blogs";
@@ -6,7 +7,7 @@ export async function GET(
   _request: Request,
   { params }: { params: { slug: string } },
 ) {
-  const blog = getBlogBySlug(params.slug);
+  const blog = await getBlogBySlug(params.slug);
 
   if (!blog) {
     return NextResponse.json({ error: "Blog not found" }, { status: 404 });
@@ -26,7 +27,7 @@ export async function PUT(
   }
 
   try {
-    const blog = updateBlog(params.slug, body);
+    const blog = await updateBlog(params.slug, body);
     return NextResponse.json({ blog });
   } catch {
     return NextResponse.json({ error: "Blog not found" }, { status: 404 });
@@ -37,11 +38,11 @@ export async function DELETE(
   _request: Request,
   { params }: { params: { slug: string } },
 ) {
-  const existing = getBlogBySlug(params.slug);
+  const existing = await getBlogBySlug(params.slug);
   if (!existing) {
     return NextResponse.json({ error: "Blog not found" }, { status: 404 });
   }
 
-  deleteBlog(params.slug);
+  await deleteBlog(params.slug);
   return NextResponse.json({ ok: true });
 }

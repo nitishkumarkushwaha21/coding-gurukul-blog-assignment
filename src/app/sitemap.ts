@@ -1,10 +1,11 @@
+// Builds dynamic sitemap entries from currently published blogs.
 import type { MetadataRoute } from "next";
 
 import { getPublishedBlogs } from "@/lib/blogs";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
-  const published = getPublishedBlogs();
+  const published = await getPublishedBlogs();
 
   const blogEntries: MetadataRoute.Sitemap = published.map((blog) => ({
     url: `${baseUrl}/blog/${blog.slug}`,

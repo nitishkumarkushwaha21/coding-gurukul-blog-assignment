@@ -11,6 +11,8 @@ It supports:
 - SEO-friendly blog detail pages with SSG and metadata
 - Admin dashboard for create, edit, publish toggle, and delete
 - Rich MDX editing with autosave and preview
+- Content image upload with URL insertion from the editor
+- Embedded rich content (YouTube, link cards) and Mermaid diagrams
 - Dark mode and responsive layouts
 
 ## Tech Stack
@@ -103,25 +105,64 @@ src/
 ## Vercel Deployment Notes
 
 - A minimal vercel.json already exists and works for Next.js.
-- This demo uses file writes to src/data/blogs.json.
-- On Vercel production, the filesystem is read-only at runtime, so JSON writes are not persistent.
-- For production, replace the JSON store with a database layer (for example PlanetScale, Supabase, or Upstash Redis).
+- This project supports two storage modes:
+  - Default fallback: file writes to src/data/blogs.json (local/dev friendly)
+  - Optional production mode: Neon Postgres (persistent)
+- On Vercel production, JSON writes are not persistent, so Neon mode is recommended.
+
+## Database Setup (Optional, Recommended for Production)
+
+1. Create a Neon Postgres database.
+2. Run SQL from postgres-schema.sql on your Neon database.
+3. Create environment file from .env.example and set:
+
+```bash
+DATABASE_URL=postgresql://...
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
+
+4. Restart the app.
+
+If `DATABASE_URL` is missing, the app automatically uses local JSON storage.
 
 ## Known Limitations
 
-- JSON storage is best for local/dev demos only.
+- Local JSON storage is best for local/dev demos only (unless Neon mode is enabled).
 - No authentication or authorization is enforced for admin routes.
 - Search is basic and does not include fuzzy ranking.
-- No image upload pipeline yet (URL-based images only).
+- Embedded cards are basic by design (no external oEmbed fetching yet).
 
 ## If More Time Was Available
 
 - Add authentication and role-based admin access.
-- Replace JSON store with a production DB and migrations.
+- Add DB migration/seed scripts and richer data validation around Neon writes.
 - Add full-text search and category archives.
 - Add integration tests for API + editor workflows.
 - Add analytics and content performance dashboards.
 
 ## Live Demo
 
-- Add your deployed URL here after deployment.
+- Pending deployment. Add your live URL here once deployed.
+
+## Rich Content Examples
+
+Use these patterns in post content:
+
+```md
+<YouTube id="dQw4w9WgXcQ" title="Demo video" />
+
+<EmbedCard
+  href="https://nextjs.org/docs"
+  label="Reference"
+  description="Official Next.js documentation"
+ />
+
+```mermaid
+graph TD
+  Author --> Editor
+  Editor --> Publish
+```
+```

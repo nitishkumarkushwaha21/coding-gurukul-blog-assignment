@@ -1,14 +1,15 @@
+// Loads one blog by slug and opens the admin editor for updates.
 import { notFound } from "next/navigation";
 
 import { AdminEditor } from "@/components/AdminEditor";
 import { getBlogBySlug } from "@/lib/blogs";
 
-export default function AdminEditPage({
+export default async function AdminEditPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const blog = getBlogBySlug(params.slug);
+  const blog = await getBlogBySlug(params.slug);
 
   if (!blog) {
     notFound();
