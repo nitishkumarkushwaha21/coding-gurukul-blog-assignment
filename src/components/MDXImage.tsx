@@ -13,7 +13,7 @@ export function MDXImage({ src = "", alt = "" }: MDXImageProps) {
   const [altText, caption] = alt.split("|").map((item) => item.trim());
 
   return (
-    <figure className="my-8 space-y-2">
+    <span className="my-8 block space-y-2">
       <Image
         src={src}
         alt={altText || "Article image"}
@@ -22,10 +22,10 @@ export function MDXImage({ src = "", alt = "" }: MDXImageProps) {
         className="w-full rounded-lg border border-slate-200 object-cover"
       />
       {caption ? (
-        <figcaption className="text-center text-sm text-slate-500">
+        <span className="mt-2 block text-center text-sm text-slate-500">
           {caption}
-        </figcaption>
+        </span>
       ) : null}
-    </figure>
+    </span>
   );
 }
