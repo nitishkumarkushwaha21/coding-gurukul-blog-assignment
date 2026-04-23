@@ -1,120 +1,146 @@
-# coding-gurukul-blog-assignment
+# Software Developer Intern Assignment
 
-A production-style blog CMS assignment built with Next.js 14 App Router, TypeScript, Tailwind CSS, and MDX.
+## Blog Management System (Next.js)
 
-## Project Overview
+GitHub Repository: https://github.com/nitishkumarkushwaha21/coding-gurukul-blog-assignment
 
-This project is a blog management system built with Next.js App Router, TypeScript, Tailwind CSS, and MDX.
-It supports:
+## Objective
 
-- Editorial-style homepage with search, tag filters, and pagination
-- SEO-friendly blog detail pages with SSG and metadata
-- Admin dashboard for create, edit, publish toggle, and delete
-- Rich MDX editing with autosave and preview
-- Content image upload with URL insertion from the editor
-- Embedded rich content (YouTube, link cards) and Mermaid diagrams
-- Dark mode and responsive layouts
+Build a modern Blog Management System with focus on:
 
-## Tech Stack
+- High-quality UI/UX
+- Complete blog features
+- Strong SEO implementation
+- Rich content using MDX and editor workflow
 
-- Next.js 14 (App Router): server components, metadata, route handlers, SSG
-- TypeScript: static type safety
-- Tailwind CSS: fast and consistent UI styling
-- next-mdx-remote/rsc: server-side MDX rendering for SEO and performance
-- @uiw/react-md-editor: rich markdown editing experience
-- reading-time: reading-time calculation for cards/detail pages
-- rehype-highlight + rehype-slug + rehype-autolink-headings: syntax highlighting and heading anchors
-- next-themes: dark mode support
-- sonner: toast notifications in admin flows
-- Local JSON store: lightweight data layer for demo/dev
+## Tech Requirements
+
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS + shadcn/ui
+
+## Scope Constraint
+
+- No authentication required
+- Keep backend simple (blog CRUD only)
+- Focus on frontend, content experience, and SEO
+
+## Requirement Coverage
+
+### Core Features
+
+#### Blog Listing Page
+
+- Shows published blogs
+- Blog card includes: cover image, title, excerpt, author, featured, date
+- Clean responsive layout
+- Pagination implemented
+
+#### Blog Detail Page
+
+- Route: /blog/[slug]
+- Renders title (H1), cover image, full content, tags, author, date
+- Rich content rendering through MDX
+
+#### Blog Management (Admin UI)
+
+- Create, edit, delete blog
+- Draft and publish toggle
+- Live preview in editor
+
+### Rich Content Requirements
+
+- MDX and rich editor support for headings, lists, and code blocks
+- Images in content via URL and upload endpoint
+- Internal and external links support
+- Code snippets with syntax highlighting
+- Embeds and diagrams support:
+  - YouTube embed component
+  - Link embed card component
+  - Mermaid diagram rendering
+
+### UI and UX Expectations
+
+- Clean modern UI with Tailwind and shadcn/ui
+- Good typography and readability for long-form content
+- Proper spacing and visual hierarchy
+- Responsive behavior across screen sizes
+- Reusable components:
+  - BlogCard
+  - Editor UI
+  - Form elements
+
+### SEO Requirements
+
+- Slug-based URLs
+- Dynamic metadata (title, description)
+- Open Graph and Twitter tags
+- Semantic HTML structure (H1/H2 etc.)
+- Performance-oriented rendering:
+  - Static generation for blog detail pages
+  - Dynamic sitemap and robots generation
+
+### Bonus Features
+
+- Search blogs
+- Filter by tags
+- Dark mode
+- Table of contents from headings
+- Reading time calculation
+- Syntax highlighting
+
+## Evaluation Criteria Mapping
+
+### UI and UX (35%)
+
+- Visual quality and spacing covered with Tailwind + shadcn/ui
+- Blog reading experience with readable typography and TOC
+- Responsive layout for listing, detail, and admin screens
+- Reusable component-based architecture
+
+### Blog Features (25%)
+
+- Full CRUD flow in admin panel
+- Draft and publish control
+- Accurate rendering of authored content
+
+### Rich Content Handling (20%)
+
+- MDX pipeline integrated
+- Image handling inside content
+- Link and formatting support
+- Complex content support through embeds and Mermaid
+
+### SEO (20%)
+
+- Metadata implementation per page
+- Clean URL structure
+- Semantic HTML in content pages
+- Static rendering strategy for better performance
 
 ## Setup
 
-1. Install dependencies:
+1. Install dependencies.
 
 ```bash
 npm install
 ```
 
-2. Run development server:
+2. Start development server.
 
 ```bash
 npm run dev
 ```
 
-3. Open:
+3. Open the app.
 
 ```text
 http://localhost:3000
 ```
 
-## Repository
+## Environment
 
-- GitHub: https://github.com/nitishkumarkushwaha21/coding-gurukul-blog-assignment
-
-## Folder Structure
-
-```text
-src/
-  app/
-    page.tsx
-    loading.tsx
-    not-found.tsx
-    sitemap.ts
-    robots.ts
-    blog/[slug]/page.tsx
-    admin/page.tsx
-    admin/new/page.tsx
-    admin/edit/[slug]/page.tsx
-    api/blogs/...
-  components/
-    BlogCard.tsx
-    BlogListingClient.tsx
-    BlogDetail.tsx
-    AdminBlogTable.tsx
-    AdminEditor.tsx
-    TableOfContents.tsx
-    ThemeProvider.tsx
-    ThemeToggle.tsx
-    ui/...
-  lib/
-    blogs.ts
-    mdx.tsx
-    seo.ts
-  data/
-    blogs.json
-  types/
-    blog.ts
-```
-
-## Key Decisions
-
-- File-based JSON store was chosen for simplicity and project scope. No external DB is required for demo/dev.
-- next-mdx-remote/rsc is used for server-side MDX rendering so content is SEO-friendly and fast.
-- Blog detail pages use generateStaticParams for SSG to improve performance and cacheability.
-- @uiw/react-md-editor provides practical rich editing without introducing a full backend CMS.
-
-## SEO and Performance Notes
-
-- Dynamic sitemap and robots are generated from published content.
-- Blog metadata includes Open Graph and Twitter cards.
-- Article JSON-LD structured data is injected on detail pages.
-- Above-the-fold images use priority where appropriate.
-- Admin MD editor is dynamically imported to reduce initial bundle cost.
-
-## Vercel Deployment Notes
-
-- A minimal vercel.json already exists and works for Next.js.
-- This project supports two storage modes:
-  - Default fallback: file writes to src/data/blogs.json (local/dev friendly)
-  - Optional production mode: Neon Postgres (persistent)
-- On Vercel production, JSON writes are not persistent, so Neon mode is recommended.
-
-## Database Setup (Optional, Recommended for Production)
-
-1. Create a Neon Postgres database.
-2. Run SQL from postgres-schema.sql on your Neon database.
-3. Create environment file from .env.example and set:
+Copy .env.example to .env.local and set values:
 
 ```bash
 DATABASE_URL=postgresql://...
@@ -124,45 +150,23 @@ CLOUDINARY_API_SECRET=...
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
-4. Restart the app.
+If DATABASE_URL is missing, app falls back to local JSON storage for development.
 
-If `DATABASE_URL` is missing, the app automatically uses local JSON storage.
+## Database (Optional, Recommended for Production)
 
-## Known Limitations
+1. Create Neon Postgres database.
+2. Run SQL from postgres-schema.sql.
+3. Restart app.
 
-- Local JSON storage is best for local/dev demos only (unless Neon mode is enabled).
-- No authentication or authorization is enforced for admin routes.
-- Search is basic and does not include fuzzy ranking.
-- Embedded cards are basic by design (no external oEmbed fetching yet).
+## Architecture Decisions
 
-## If More Time Was Available
+- Simple backend CRUD with route handlers to match assignment scope.
+- MDX rendering on server for better SEO and performance.
+- Static generation for blog detail pages.
+- Optional Postgres mode for persistent production data.
 
-- Add authentication and role-based admin access.
-- Add DB migration/seed scripts and richer data validation around Neon writes.
-- Add full-text search and category archives.
-- Add integration tests for API + editor workflows.
-- Add analytics and content performance dashboards.
+## Submission
 
-## Live Demo
-
-- Pending deployment. Add your live URL here once deployed.
-
-## Rich Content Examples
-
-Use these patterns in post content:
-
-```md
-<YouTube id="dQw4w9WgXcQ" title="Demo video" />
-
-<EmbedCard
-  href="https://nextjs.org/docs"
-  label="Reference"
-  description="Official Next.js documentation"
- />
-
-```mermaid
-graph TD
-  Author --> Editor
-  Editor --> Publish
-```
-```
+- GitHub repo: included
+- Live demo: preferred (add deployed URL when available)
+- README with setup and decisions: included
