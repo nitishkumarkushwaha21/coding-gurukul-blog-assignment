@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import type React from "react";
 
 type CodeBlockProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 };
 
