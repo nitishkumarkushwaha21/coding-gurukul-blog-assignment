@@ -1,122 +1,97 @@
-# Software Developer Intern Assignment
+# Coding Gurukul Blog Management System
 
-## Blog Management System (Next.js)
+Modern blog management app built with Next.js App Router, TypeScript, Tailwind CSS, and shadcn/ui.
 
 GitHub Repository: https://github.com/nitishkumarkushwaha21/coding-gurukul-blog-assignment
 
-## Objective
+## What This App Does
 
-Build a modern Blog Management System with focus on:
+- Publishes SEO-friendly blog posts with clean slug routes.
+- Provides admin tools to create, edit, delete, and publish drafts.
+- Supports rich writing using MDX, code blocks, images, links, embeds, and Mermaid diagrams.
+- Gives a polished reading experience with search, tags, pagination, table of contents, and dark mode.
 
-- High-quality UI/UX
-- Complete blog features
-- Strong SEO implementation
-- Rich content using MDX and editor workflow
+## Main Pages
 
-## Tech Requirements
+### Public Pages
 
-- Next.js (App Router)
+- `/`:
+  - Blog listing page with featured cards, search, tag filters, and pagination.
+- `/blog/[slug]`:
+  - Full blog detail page with title, cover image, author/date, tags, TOC, and rich content rendering.
+
+### Admin Pages
+
+- `/admin`:
+  - Blog management table with edit/delete and draft/publish actions.
+- `/admin/new`:
+  - New blog creation form + rich editor.
+- `/admin/edit/[slug]`:
+  - Edit existing post with preview and publishing controls.
+
+### SEO/System Routes
+
+- `/sitemap.xml`: dynamic sitemap from published posts.
+- `/robots.txt`: robots rules and sitemap reference.
+
+## Feature Highlights
+
+### Core Blog Features
+
+- Published-only listing on homepage.
+- Blog cards include cover image, title, excerpt, author, featured badge, and date.
+- Full blog CRUD from admin UI.
+- Draft and publish toggle.
+- Live preview inside editor.
+
+### Rich Content
+
+- MDX-based rendering pipeline.
+- Rich editor for headings, lists, code blocks, and formatting.
+- Image support:
+  - Add image URL directly.
+  - Upload image from editor via API endpoint.
+- Links support for internal and external URLs.
+- Advanced content blocks:
+  - Syntax-highlighted code snippets.
+  - YouTube embed component.
+  - Link embed card component.
+  - Mermaid diagram support.
+
+### UI/UX
+
+- Responsive UI across desktop and mobile.
+- Reusable components (BlogCard, editor components, form controls).
+- Strong typography and spacing for long-form reading.
+- Dark mode support.
+
+### SEO and Performance
+
+- Slug-based blog URLs.
+- Dynamic metadata for blog pages (title/description/Open Graph/Twitter).
+- Semantic heading structure in content pages.
+- Static generation strategy for blog detail pages.
+- Dynamic sitemap and robots generation.
+
+## Tech Stack
+
+- Next.js 14 (App Router)
 - TypeScript
 - Tailwind CSS + shadcn/ui
+- next-mdx-remote/rsc + rehype plugins
+- @uiw/react-md-editor
+- next-themes
+- postgres (optional Neon persistence)
+- cloudinary (image upload path)
 
-## Scope Constraint
+## Storage Model
 
-- No authentication required
-- Keep backend simple (blog CRUD only)
-- Focus on frontend, content experience, and SEO
+- Default development mode:
+  - Local JSON file store.
+- Optional production mode:
+  - Neon Postgres using `DATABASE_URL`.
 
-## Requirement Coverage
-
-### Core Features
-
-#### Blog Listing Page
-
-- Shows published blogs
-- Blog card includes: cover image, title, excerpt, author, featured, date
-- Clean responsive layout
-- Pagination implemented
-
-#### Blog Detail Page
-
-- Route: /blog/[slug]
-- Renders title (H1), cover image, full content, tags, author, date
-- Rich content rendering through MDX
-
-#### Blog Management (Admin UI)
-
-- Create, edit, delete blog
-- Draft and publish toggle
-- Live preview in editor
-
-### Rich Content Requirements
-
-- MDX and rich editor support for headings, lists, and code blocks
-- Images in content via URL and upload endpoint
-- Internal and external links support
-- Code snippets with syntax highlighting
-- Embeds and diagrams support:
-  - YouTube embed component
-  - Link embed card component
-  - Mermaid diagram rendering
-
-### UI and UX Expectations
-
-- Clean modern UI with Tailwind and shadcn/ui
-- Good typography and readability for long-form content
-- Proper spacing and visual hierarchy
-- Responsive behavior across screen sizes
-- Reusable components:
-  - BlogCard
-  - Editor UI
-  - Form elements
-
-### SEO Requirements
-
-- Slug-based URLs
-- Dynamic metadata (title, description)
-- Open Graph and Twitter tags
-- Semantic HTML structure (H1/H2 etc.)
-- Performance-oriented rendering:
-  - Static generation for blog detail pages
-  - Dynamic sitemap and robots generation
-
-### Bonus Features
-
-- Search blogs
-- Filter by tags
-- Dark mode
-- Table of contents from headings
-- Reading time calculation
-- Syntax highlighting
-
-## Evaluation Criteria Mapping
-
-### UI and UX (35%)
-
-- Visual quality and spacing covered with Tailwind + shadcn/ui
-- Blog reading experience with readable typography and TOC
-- Responsive layout for listing, detail, and admin screens
-- Reusable component-based architecture
-
-### Blog Features (25%)
-
-- Full CRUD flow in admin panel
-- Draft and publish control
-- Accurate rendering of authored content
-
-### Rich Content Handling (20%)
-
-- MDX pipeline integrated
-- Image handling inside content
-- Link and formatting support
-- Complex content support through embeds and Mermaid
-
-### SEO (20%)
-
-- Metadata implementation per page
-- Clean URL structure
-- Semantic HTML in content pages
-- Static rendering strategy for better performance
+If `DATABASE_URL` is not set, app automatically falls back to local JSON storage.
 
 ## Setup
 
@@ -126,21 +101,13 @@ Build a modern Blog Management System with focus on:
 npm install
 ```
 
-2. Start development server.
+2. Create local env file.
 
 ```bash
-npm run dev
+cp .env.example .env.local
 ```
 
-3. Open the app.
-
-```text
-http://localhost:3000
-```
-
-## Environment
-
-Copy .env.example to .env.local and set values:
+3. Add required environment values in `.env.local`.
 
 ```bash
 DATABASE_URL=postgresql://...
@@ -150,23 +117,34 @@ CLOUDINARY_API_SECRET=...
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
-If DATABASE_URL is missing, app falls back to local JSON storage for development.
+4. Start development server.
 
-## Database (Optional, Recommended for Production)
+```bash
+npm run dev
+```
 
-1. Create Neon Postgres database.
-2. Run SQL from postgres-schema.sql.
-3. Restart app.
+5. Open the app.
 
-## Architecture Decisions
+```text
+http://localhost:3000
+```
 
-- Simple backend CRUD with route handlers to match assignment scope.
-- MDX rendering on server for better SEO and performance.
-- Static generation for blog detail pages.
-- Optional Postgres mode for persistent production data.
+## Optional Production DB Setup
 
-## Submission
+1. Create a Neon Postgres database.
+2. Run schema from `postgres-schema.sql`.
+3. Restart app after setting `DATABASE_URL`.
 
-- GitHub repo: included
-- Live demo: preferred (add deployed URL when available)
-- README with setup and decisions: included
+## Assignment Context
+
+This project was built for the Software Developer Intern assignment with focus on:
+
+- UI/UX quality
+- complete blog features
+- SEO implementation
+- rich MDX/editor content support
+
+Scope followed intentionally:
+
+- no authentication layer
+- simple backend for blog CRUD

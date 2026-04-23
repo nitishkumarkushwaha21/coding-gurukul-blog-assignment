@@ -334,7 +334,7 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
 
   return (
     <section
-      className="space-y-4 rounded-2xl border bg-white p-5 shadow-sm"
+      className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm ring-1 ring-slate-200/60"
       data-color-mode="light"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -472,7 +472,7 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
         </div>
         <div className="mt-2 flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <Badge key={tag} className="bg-slate-100 text-slate-700">
+            <Badge key={tag} className="border border-slate-300 bg-slate-100 text-slate-700">
               {tag}
               <button
                 type="button"
@@ -582,7 +582,7 @@ export function AdminEditor({ mode, initialBlog }: AdminEditorProps) {
           </div>
         </TabsContent>
         <TabsContent value="preview">
-          <div className="prose max-w-none rounded-xl border border-slate-200 bg-white p-5">
+          <div className="prose max-w-none rounded-xl border border-slate-200 bg-white p-5 shadow-sm ring-1 ring-slate-200/60">
             <MarkdownPreview source={content} />
           </div>
         </TabsContent>

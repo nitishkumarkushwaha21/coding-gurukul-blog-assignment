@@ -18,7 +18,7 @@ export function BlogDetail({ blog }: { blog: Blog }) {
         <span aria-hidden="true">←</span> All Posts
       </Link>
 
-      <header className="space-y-5 border-b border-slate-200 pb-8 dark:border-slate-800" aria-label="Blog header">
+      <header className="space-y-5 border-b border-slate-200 pb-8 dark:border-slate-700" aria-label="Blog header">
         <h1 className="max-w-4xl font-display text-5xl leading-tight tracking-tight text-slate-900 dark:text-slate-100 md:text-6xl">
           {blog.title}
         </h1>
@@ -59,18 +59,18 @@ export function BlogDetail({ blog }: { blog: Blog }) {
         width={1200}
         height={600}
         priority
-        className="max-h-[500px] w-full rounded-2xl border border-slate-200 object-cover"
+        className="max-h-[500px] w-full rounded-2xl border border-slate-200 object-cover shadow-sm ring-1 ring-slate-200/60 dark:border-slate-700 dark:ring-slate-700/70"
       />
 
       <div className="grid gap-8 lg:grid-cols-[68%_32%]">
         <section
           aria-label="Post content"
-          className="article-prose rounded-2xl border border-slate-200 bg-white p-6 md:p-10 dark:border-slate-800 dark:bg-slate-900"
+          className="article-prose rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-200/60 md:p-12 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/25 dark:ring-slate-700/70"
         >
           {renderMDX(blog.content)}
         </section>
         <aside
-          className="lg:sticky lg:top-24 lg:self-start"
+          className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm ring-1 ring-slate-200/60 lg:sticky lg:top-24 lg:self-start dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/25 dark:ring-slate-700/70"
           aria-label="Post table of contents"
         >
           <TableOfContents content={blog.content} />

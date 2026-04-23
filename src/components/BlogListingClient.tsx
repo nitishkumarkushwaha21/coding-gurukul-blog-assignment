@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { format } from "date-fns";
 
 import type { Blog } from "@/types/blog";
 
@@ -49,7 +50,7 @@ export function BlogListingClient({
 
   return (
     <section className="space-y-10" aria-label="Homepage blog listing">
-      <header className="space-y-6 rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-amber-50/60 p-8 shadow-sm dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950">
+      <header className="space-y-6 rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-amber-50/60 p-8 shadow-sm ring-1 ring-slate-200/60 dark:border-slate-700 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 dark:ring-slate-700/70">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
           Editorial Magazine
         </p>
@@ -81,7 +82,7 @@ export function BlogListingClient({
             ) : null}
             <Link
               href="/"
-              className="rounded-full border border-transparent px-3 py-1 font-medium text-slate-600 underline decoration-slate-400 underline-offset-4 transition hover:border-slate-200 hover:bg-white hover:text-slate-900 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-900 dark:hover:text-slate-100"
+              className="rounded-full border border-transparent px-3 py-1 font-medium text-slate-600 underline decoration-slate-400 underline-offset-4 transition hover:border-slate-200 hover:bg-white hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-900 dark:hover:text-slate-100 dark:focus-visible:ring-blue-500"
             >
               Clear all
             </Link>
@@ -90,7 +91,7 @@ export function BlogListingClient({
       </header>
 
       {hero ? (
-        <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-200/60 transition duration-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/25 dark:ring-slate-700/70 dark:hover:border-slate-500 dark:hover:shadow-lg">
           <Link href={`/blog/${hero.slug}`} className="block">
             <div className="relative aspect-[16/7] w-full">
               <Image
@@ -109,17 +110,27 @@ export function BlogListingClient({
               Featured Story
             </p>
             <h2 className="font-display text-4xl leading-tight text-slate-900 dark:text-slate-100 md:text-5xl">
-              <Link href={`/blog/${hero.slug}`} className="hover:underline">
+              <Link
+                href={`/blog/${hero.slug}`}
+                className="rounded-sm hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:focus-visible:ring-blue-500"
+              >
                 {hero.title}
               </Link>
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">
               {hero.excerpt}
             </p>
+            <div className="flex flex-wrap items-center gap-3 border-t border-slate-200 pt-3 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
+              <span className="font-medium text-slate-700 dark:text-slate-200">{hero.author.name}</span>
+              <span>•</span>
+              <span>{format(new Date(hero.createdAt), "MMM d, yyyy")}</span>
+              <span>•</span>
+              <span>{hero.readingTime}</span>
+            </div>
           </div>
         </article>
       ) : (
-        <p className="rounded-xl border border-slate-200 bg-white p-6 text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+        <p className="rounded-xl border border-slate-200 bg-white p-6 text-slate-600 shadow-sm ring-1 ring-slate-200/60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:ring-slate-700/70">
           No matching posts found.
         </p>
       )}
@@ -144,13 +155,13 @@ export function BlogListingClient({
           aria-disabled={isFirstPage}
           className={`rounded-lg border px-4 py-2 text-sm transition ${
             isFirstPage
-              ? "pointer-events-none border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-600"
-              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:bg-slate-800"
+              ? "pointer-events-none border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-600"
+              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-500 dark:hover:bg-slate-800"
           }`}
         >
           Previous
         </Link>
-        <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+        <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
           Page {safePage} of {pageCount}
         </span>
         <Link
@@ -162,8 +173,8 @@ export function BlogListingClient({
           aria-disabled={isLastPage}
           className={`rounded-lg border px-4 py-2 text-sm transition ${
             isLastPage
-              ? "pointer-events-none border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-600"
-              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:bg-slate-800"
+              ? "pointer-events-none border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-600"
+              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-500 dark:hover:bg-slate-800"
           }`}
         >
           Next

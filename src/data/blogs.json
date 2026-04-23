@@ -92,7 +92,7 @@
     "slug": "mdx-components-for-better-storytelling",
     "title": "MDX Components for Better Storytelling",
     "excerpt": "Using custom components inside Markdown to create richer educational posts.",
-    "content": "# Beyond plain markdown\nMDX enables interactive and visual storytelling blocks.\n\n## Good use cases\n- Callout notes\n- Embedded charts\n- Reusable checklists\n\n```tsx\nexport function Callout({ children }: { children: React.ReactNode }) {\n  return <aside className=\"rounded-lg border p-4\">{children}</aside>;\n}\n```\n\n![Story components](https://picsum.photos/700/320?random=35)\n\n### Key takeaway\nDesign reusable content primitives once, then use them everywhere.",
+    "content": "# Beyond plain markdown\nMDX lets you mix writing with reusable UI blocks so technical posts stay clear and engaging.\n\n## Good use cases\n- Callout notes for warnings and tips\n- Embedded references and media\n- Reusable checklists across tutorials\n\n### A small MDX pattern\nUse a tiny component when you want repeated highlight blocks:\n\n```tsx\nfunction Callout({ children }: { children: React.ReactNode }) {\n  return <aside className=\"rounded-lg border border-amber-200 bg-amber-50 p-4\">{children}</aside>;\n}\n```\n\nThen inside content:\n\n```mdx\n<Callout>Always validate user input before saving.</Callout>\n```\n\n![Story components](https://picsum.photos/700/320?random=35)\n\n### Key takeaway\nKeep content readable first, then use components only where they improve comprehension.",
     "coverImage": "https://picsum.photos/800/400?random=5",
     "author": {
       "name": "Ivy Chen",

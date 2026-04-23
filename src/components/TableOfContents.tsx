@@ -72,7 +72,7 @@ export function TableOfContents({ content }: { content: string }) {
   return (
     <>
       <aside
-        className="hidden rounded-xl border bg-white p-4 dark:border-slate-800 dark:bg-slate-900 lg:block"
+        className="hidden rounded-xl border border-slate-200 bg-white p-4 shadow-sm ring-1 ring-slate-200/60 dark:border-slate-700 dark:bg-slate-900 dark:ring-slate-700/70 lg:block"
         aria-label="Table of contents"
       >
         <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
@@ -86,7 +86,7 @@ export function TableOfContents({ content }: { content: string }) {
                 className={
                   activeId === heading.id
                     ? "font-semibold text-slate-900 dark:text-slate-100"
-                    : "text-slate-700 hover:text-slate-900 hover:underline dark:text-slate-300 dark:hover:text-slate-100"
+                    : "rounded-sm text-slate-700 hover:text-slate-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:text-slate-300 dark:hover:text-slate-100 dark:focus-visible:ring-blue-500"
                 }
               >
                 {heading.text}
@@ -100,7 +100,7 @@ export function TableOfContents({ content }: { content: string }) {
         <button
           type="button"
           onClick={() => setMobileOpen((value) => !value)}
-          className="fixed bottom-5 right-5 z-40 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+          className="fixed bottom-5 right-5 z-40 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus-visible:ring-blue-500"
         >
           {mobileOpen ? "Close TOC" : "Open TOC"}
         </button>
